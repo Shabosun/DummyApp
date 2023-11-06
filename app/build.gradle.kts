@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-kapt")
+
 }
 
 android {
@@ -42,11 +44,20 @@ android {
 
 dependencies {
     val nav_version = "2.7.4"
+    val room_version = "2.5.2"
 
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    implementation ("androidx.room:room-runtime:$room_version")
+    implementation ("androidx.room:room-ktx:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

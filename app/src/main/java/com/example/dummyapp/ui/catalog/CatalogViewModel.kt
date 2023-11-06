@@ -9,14 +9,18 @@ import androidx.lifecycle.viewModelScope
 import com.example.dummyapp.LoginActivity
 import com.example.dummyapp.retrofit.ProductApi
 import com.example.dummyapp.retrofit.RetrofitInstance
+import com.example.dummyapp.retrofit.model.Cart
+import com.example.dummyapp.retrofit.model.CartPost
 import com.example.dummyapp.retrofit.model.Product
 import com.example.dummyapp.retrofit.model.Products
+import com.example.dummyapp.retrofit.model.ProductsPost
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import java.io.IOException
 import kotlin.coroutines.coroutineContext
+import kotlin.random.Random
 
 class CatalogViewModel : ViewModel() {
 
@@ -27,6 +31,7 @@ class CatalogViewModel : ViewModel() {
 
 
     var token : String? = null
+    var userId : Int? = null
     private val api = RetrofitInstance.create(ProductApi::class.java)
     private val _products = MutableLiveData<List<Product>>()
     val products : LiveData<List<Product>> = _products
@@ -38,9 +43,15 @@ class CatalogViewModel : ViewModel() {
     val navigateToProduct : LiveData<Int?>
         get() = _navigateToProduct
 
-    private val _error = MutableLiveData<String>()
-    val error : LiveData<String>
+    private val _error = MutableLiveData<String?>()
+    val error : LiveData<String?>
         get() = _error
+
+    fun clearError()
+    {
+        _error.value = null
+    }
+
 
 
 
@@ -67,7 +78,7 @@ class CatalogViewModel : ViewModel() {
                     }.toString()
                     if(response?.code() in 400..499 )
                     {
-                        //runOnUiThread { binding.error.text = message }
+
                         _error.value = message
                         Log.d(LOG_TAG, "Error:" + errorBody?.string() + " Error code: " + response?.code())
                     }
@@ -92,6 +103,50 @@ class CatalogViewModel : ViewModel() {
 
 
     }
+
+    fun addProductToCart(productId : Int)
+    {
+        try{
+            lateinit var message : String
+            viewModelScope.launch {
+                    val productPost = ProductsPost(productId, 1)
+                    val productPostList = listOf(productPost)
+                    val cartPost = userId?.let{CartPost(it, productPostList)}
+                    val response = token?.let{api.addNewCart(it, cartPost!!)}
+                    if(response?.isSuccessful == true)
+                    {
+                        _error.value = "Product added to cart"
+                    }
+                    else{
+                        val errorBody : ResponseBody? = response?.errorBody()
+                        message = response?.errorBody()?.string()?.let {
+                            JSONObject(it).getString("message")
+                        }.toString()
+                        if(response?.code() in 400..499 )
+                        {
+
+                            _error.value = message
+                            Log.d(LOG_TAG, "Error:" + errorBody?.string() + " Error code: " + response?.code())
+                        }
+                        else if(response?.code()!! >= 500)
+                        {
+                            _error.value = message
+                            Log.d(LOG_TAG, "Error:" + errorBody?.string() + " Error code: " + response.code())
+                        }
+                    }
+                }
+
+
+        }catch(e : IOException)
+        {
+            Log.d(LOG_TAG, "Error: " + e.message)
+            _error.value = e.message
+        }
+
+
+
+    }
+
 
     fun getProductsOfCategory(category : String)
     {

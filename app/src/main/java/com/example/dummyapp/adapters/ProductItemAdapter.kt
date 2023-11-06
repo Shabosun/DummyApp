@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,22 +14,26 @@ import com.example.dummyapp.databinding.ProductItemBinding
 import com.example.dummyapp.retrofit.model.Product
 import com.squareup.picasso.Picasso
 
-class ProductItemAdapter(val clickListener : (productId : Int) -> Unit)
+class ProductItemAdapter(val clickListener : (productId : Int) -> Unit, val addCartListener : (productId : Int) -> Unit)
     : ListAdapter<Product, ProductItemAdapter.ViewHolder>(Comporator()) {
+
+
 
         class ViewHolder(view : View) : RecyclerView.ViewHolder(view)
         {
             private val binding = ProductItemBinding.bind(view)
 
-            fun bind(product : Product, clickListener : (productId : Int) -> Unit)
+            fun bind(product : Product, clickListener : (productId : Int) -> Unit, addCartListener : (productId : Int) -> Unit)
             {
 
                 binding.headline.text = product.title
                 binding.price.text = product.price.toString() + "$"
                 Picasso.get().load(product.thumbnail).into(binding.tnumbImg)
                 binding.root.setOnClickListener{clickListener(product.id)}
-                //add click listener for button add cart
+                binding.buttonAddCart.setOnClickListener{addCartListener(product.id)}
             }
+
+
 
         }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,7 +44,7 @@ class ProductItemAdapter(val clickListener : (productId : Int) -> Unit)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), clickListener)
+        holder.bind(getItem(position), clickListener, addCartListener)
     }
 
     class Comporator : DiffUtil.ItemCallback<Product>(){

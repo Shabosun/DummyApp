@@ -23,14 +23,15 @@ import kotlinx.coroutines.launch
 class CatalogFragment : Fragment() {
 
     var token : String? = null
+    var userId : Int? = null
     private var _binding : FragmentCatalogBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter : ProductItemAdapter
+    private var adapter : ProductItemAdapter
     private lateinit var viewModel : CatalogViewModel
 
 
     init{
-        adapter = ProductItemAdapter { productId -> viewModel.onProductClicked(productId)  }
+        adapter = ProductItemAdapter( { productId -> viewModel.onProductClicked(productId) }, {productId -> viewModel.addProductToCart(productId)  })
 
     }
 
@@ -40,6 +41,7 @@ class CatalogFragment : Fragment() {
 
         val args = requireActivity().intent.extras
         token = args?.getString(LoginActivity.TOKEN)
+        userId = args?.getInt(LoginActivity.USER_ID)
 
 
     }
@@ -80,6 +82,7 @@ class CatalogFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(CatalogViewModel::class.java)
         viewModel.token = token
+        viewModel.userId = userId
         viewModel.getProducts()
         viewModel.getAllProductCategories()
 
@@ -98,38 +101,45 @@ class CatalogFragment : Fragment() {
         })
 
         viewModel.error.observe(viewLifecycleOwner, Observer{message ->
-            message?.let{
-                Toast.makeText(context, message,Toast.LENGTH_SHORT).show()
+            if(message != null)
+            {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                viewModel.clearError() //чтобы при возвращении во фрагмент каталога не появлялся Toast
             }
+
         })
 
 
-        //работает через раз, непонятно почему???
-//        viewModel.categories.observe(viewLifecycleOwner, Observer{
-//            categories ->
-//            for(i in categories)
-//            {
-//                val chip = Chip(binding.chipGroup.context)
-//                chip.isClickable = true
-//                chip.isCheckable = true
-//                chip.setTag("chip_$i")
-//                chip.setText("$i")
-//                chip.setOnClickListener{x -> x.setOnClickListener{
-//
-//
-//                        viewModel.getProductsOfCategory(chip.text.toString())
-//
-//
-//
-//                }}
-//                binding.chipGroup.addView(chip)
-//
-//
-//            }
-//
-//
-//
-//        })
+        viewModel.categories.observe(viewLifecycleOwner, Observer{
+            categories ->
+            for(i in categories)
+            {
+                val chip = Chip(binding.chipGroup.context)
+                chip.isClickable = true
+                chip.isCheckable = true
+                chip.isCloseIconVisible = true
+                chip.setTag("chip_$i")
+                chip.setText("$i")
+                chip.setOnCloseIconClickListener{
+                    chip.isChecked = false
+                    viewModel.getProducts()
+                }
+                chip.setOnClickListener{x -> x.setOnClickListener{
+
+
+                        viewModel.getProductsOfCategory(chip.text.toString())
+
+
+
+                }}
+                binding.chipGroup.addView(chip)
+
+
+            }
+
+
+
+        })
 
 
 

@@ -1,11 +1,15 @@
 package com.example.dummyapp.retrofit
 
+import com.example.dummyapp.retrofit.model.CartPost
+import com.example.dummyapp.retrofit.model.Carts
 import com.example.dummyapp.retrofit.model.Product
 import com.example.dummyapp.retrofit.model.Products
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -30,6 +34,14 @@ interface ProductApi {
     @Headers("Content-Type:application/json")
     @GET("auth//products/categories")
     suspend fun getAllProductCategories(@Header("Authorization") token : String) :  Response<List<String>>
+
+    @Headers("Content-Type:application/json")
+    @GET("auth/carts/user/{id}")
+    suspend fun getCartsByUserId(@Header("Authorization") token : String, @Path("id") id : Int) : Response<Carts>
+
+    @Headers("Content-Type:application/json")
+    @POST("auth/carts/add")
+    suspend fun addNewCart(@Header("Authorization") token : String, @Body cartPost: CartPost) : Response<Products>
 
 
 

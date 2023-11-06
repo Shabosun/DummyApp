@@ -6,5 +6,8 @@
     tools:context=".ui.cart.CartFragment">
 
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>
