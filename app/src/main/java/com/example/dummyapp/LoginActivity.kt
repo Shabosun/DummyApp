@@ -149,6 +149,7 @@ class LoginActivity : AppCompatActivity() {
                                 //saveUserToDB(authRequest.username, authRequest.password, token)
 
                                 startActivity(intent)
+                                finish()
 
                             }
 

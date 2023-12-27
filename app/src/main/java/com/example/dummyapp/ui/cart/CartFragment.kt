@@ -25,6 +25,7 @@ class CartFragment : Fragment() {
     var userId : Int? = null
 
     private lateinit var viewModel : CartViewModel
+    private lateinit var viewModelFactory: CartViewModelFactory
     private var adapter : CartItemAdapter
 
     init{
@@ -59,10 +60,11 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
-        userId?.let { viewModel.getCartsByUserId(it) }
-        viewModel.token = token
+        viewModelFactory = CartViewModelFactory(token!!, userId!!)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CartViewModel::class.java)
+        viewModel.getCartsByUserId()
+        //userId?.let { viewModel.getCartsByUserId(it) }
+        //viewModel.token = token
 
 
         viewModel.products.observe(viewLifecycleOwner, Observer{ list ->

@@ -13,11 +13,12 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.IOException
 
-class CartViewModel : ViewModel(){
+//передать сюда токен и юзер айди
+class CartViewModel(val token : String, val userId: Int) : ViewModel(){
 
     val LOG_TAG : String = "CartViewModel"
 
-    var token : String? = null
+    //var token : String? = null
     private val api = RetrofitInstance.create(ProductApi::class.java)
 
     private val _products = MutableLiveData<List<Product>>()
@@ -31,7 +32,8 @@ class CartViewModel : ViewModel(){
 
 
 
-    fun getCartsByUserId(userId : Int)
+    //fun getCartsByUserId(userId : Int)
+    fun getCartsByUserId()
     {
         try
         {

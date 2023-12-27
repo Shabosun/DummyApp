@@ -14,4 +14,13 @@
     <string name="rating_label">Rating</string>
     <string name="button_edit_profile">Edit Profile</string>
     <string name="quantity_label">quantity</string>
+
+    <!--Preferences-->
+    <string name="credentials_title_pref">Credentials</string>
+
+    <string name="phone_profile">Phone</string>
+    <string name="email_profile">Email</string>
+    <string name="birthday_profile">Birthday</string>
+    <string name="sex_profile">Sex</string>
+    <string name="log_out">Log out</string>
 </resources>

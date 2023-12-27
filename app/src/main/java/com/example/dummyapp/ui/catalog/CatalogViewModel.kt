@@ -22,7 +22,7 @@ import java.io.IOException
 import kotlin.coroutines.coroutineContext
 import kotlin.random.Random
 
-class CatalogViewModel : ViewModel() {
+class CatalogViewModel(val token : String, val userId : Int) : ViewModel() {
 
 
     private  val LOG_TAG = "CatalogViewModel"
@@ -30,8 +30,8 @@ class CatalogViewModel : ViewModel() {
 
 
 
-    var token : String? = null
-    var userId : Int? = null
+    //var token : String? = null
+    //var userId : Int? = null
     private val api = RetrofitInstance.create(ProductApi::class.java)
     private val _products = MutableLiveData<List<Product>>()
     val products : LiveData<List<Product>> = _products
@@ -112,6 +112,7 @@ class CatalogViewModel : ViewModel() {
                     val productPost = ProductsPost(productId, 1)
                     val productPostList = listOf(productPost)
                     val cartPost = userId?.let{CartPost(it, productPostList)}
+
                     val response = token?.let{api.addNewCart(it, cartPost!!)}
                     if(response?.isSuccessful == true)
                     {

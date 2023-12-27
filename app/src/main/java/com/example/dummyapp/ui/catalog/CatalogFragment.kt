@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dummyapp.LoginActivity
@@ -28,6 +29,7 @@ class CatalogFragment : Fragment() {
     private val binding get() = _binding!!
     private var adapter : ProductItemAdapter
     private lateinit var viewModel : CatalogViewModel
+    private lateinit var viewModelFactory: CatalogViewModelFactory
 
 
     init{
@@ -79,10 +81,10 @@ class CatalogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(this).get(CatalogViewModel::class.java)
-        viewModel.token = token
-        viewModel.userId = userId
+        viewModelFactory = CatalogViewModelFactory(token!!, userId!!)
+        viewModel = ViewModelProvider(this, viewModelFactory ).get(CatalogViewModel::class.java)
+        //viewModel.token = token
+        //viewModel.userId = userId
         viewModel.getProducts()
         viewModel.getAllProductCategories()
 

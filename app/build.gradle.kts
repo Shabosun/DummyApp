@@ -43,8 +43,11 @@ android {
 }
 
 dependencies {
+    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation("com.google.firebase:firebase-messaging-ktx:23.3.1")
     val nav_version = "2.7.4"
     val room_version = "2.5.2"
+
 
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")

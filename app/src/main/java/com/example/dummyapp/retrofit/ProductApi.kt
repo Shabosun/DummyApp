@@ -4,6 +4,7 @@ import com.example.dummyapp.retrofit.model.CartPost
 import com.example.dummyapp.retrofit.model.Carts
 import com.example.dummyapp.retrofit.model.Product
 import com.example.dummyapp.retrofit.model.Products
+import com.example.dummyapp.retrofit.model.UserId
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -42,6 +43,10 @@ interface ProductApi {
     @Headers("Content-Type:application/json")
     @POST("auth/carts/add")
     suspend fun addNewCart(@Header("Authorization") token : String, @Body cartPost: CartPost) : Response<Products>
+
+    @Headers("Content-Type:application/json")
+    @GET("users/{id}")
+    suspend fun getUserById(@Header("Authorization") token : String, @Path("id") id : Int) : Response<UserId>
 
 
 
