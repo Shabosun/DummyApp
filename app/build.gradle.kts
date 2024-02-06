@@ -43,31 +43,51 @@ android {
 }
 
 dependencies {
-    implementation("androidx.preference:preference-ktx:1.2.1")
-    implementation("com.google.firebase:firebase-messaging-ktx:23.3.1")
+
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     val nav_version = "2.7.4"
     val room_version = "2.5.2"
 
-
-
-    implementation ("de.hdodenhof:circleimageview:3.1.0")
-
+    //Other
+    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation("com.google.firebase:firebase-messaging-ktx:23.3.1")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
+    // Coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0")
+
+
+    //CircleImage
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+
+    //Room
     implementation ("androidx.room:room-runtime:$room_version")
     implementation ("androidx.room:room-ktx:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.5.4")
 
 
+    //Retrofit+OkHttp
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.7.2")
     implementation ("com.squareup.okhttp3:okhttp:4.7.2")
     implementation("com.squareup.picasso:picasso:2.8")
 
+    //Dagger
+    implementation("com.google.dagger:hilt-android:2.46.1")
+   // kapt("com.google.dagger:hilt-compiler:2:46.1")
+
+
+    //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 

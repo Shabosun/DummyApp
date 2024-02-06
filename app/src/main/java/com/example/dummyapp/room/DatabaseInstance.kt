@@ -16,8 +16,7 @@ abstract class DatabaseInstance :  RoomDatabase() {
         @Volatile
         private var INSTANCE : DatabaseInstance? = null
         fun getInstance(context : Context) : DatabaseInstance{
-            synchronized(this)
-            {
+
                 var instance = INSTANCE
                 if(instance == null)
                 {
@@ -30,8 +29,6 @@ abstract class DatabaseInstance :  RoomDatabase() {
 
                 }
                 return instance
-            }
-
         }
     }
 }

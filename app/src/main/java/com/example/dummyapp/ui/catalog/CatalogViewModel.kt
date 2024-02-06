@@ -14,18 +14,26 @@ import com.example.dummyapp.retrofit.model.CartPost
 import com.example.dummyapp.retrofit.model.Product
 import com.example.dummyapp.retrofit.model.Products
 import com.example.dummyapp.retrofit.model.ProductsPost
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import java.io.IOException
+import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 import kotlin.random.Random
 
-class CatalogViewModel(val token : String, val userId : Int) : ViewModel() {
+
+class CatalogViewModel (val token : String,val userId : Int) : ViewModel() {
 
 
     private  val LOG_TAG = "CatalogViewModel"
+
 
 
 

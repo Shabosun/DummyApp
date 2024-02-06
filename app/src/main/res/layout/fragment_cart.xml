@@ -10,4 +10,10 @@
         android:id="@+id/rcv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="337dp"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 </FrameLayout>

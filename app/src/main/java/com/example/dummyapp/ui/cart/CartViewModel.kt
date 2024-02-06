@@ -9,12 +9,16 @@ import com.example.dummyapp.retrofit.ProductApi
 import com.example.dummyapp.retrofit.RetrofitInstance
 import com.example.dummyapp.retrofit.model.Cart
 import com.example.dummyapp.retrofit.model.Product
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.IOException
+import javax.inject.Inject
 
 //передать сюда токен и юзер айди
-class CartViewModel(val token : String, val userId: Int) : ViewModel(){
+
+
+class CartViewModel constructor(val token : String, val userId: Int) : ViewModel(){
 
     val LOG_TAG : String = "CartViewModel"
 

@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dummyapp.LoginActivity
 import com.example.dummyapp.adapters.ProductItemAdapter
 import com.example.dummyapp.databinding.FragmentCatalogBinding
 import com.google.android.material.chip.Chip
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
 
 
 class CatalogFragment : Fragment() {
@@ -28,8 +28,14 @@ class CatalogFragment : Fragment() {
     private var _binding : FragmentCatalogBinding? = null
     private val binding get() = _binding!!
     private var adapter : ProductItemAdapter
+
+
     private lateinit var viewModel : CatalogViewModel
-    private lateinit var viewModelFactory: CatalogViewModelFactory
+    lateinit var viewModelFactory: CatalogViewModelFactory
+
+
+
+
 
 
     init{
@@ -44,6 +50,7 @@ class CatalogFragment : Fragment() {
         val args = requireActivity().intent.extras
         token = args?.getString(LoginActivity.TOKEN)
         userId = args?.getInt(LoginActivity.USER_ID)
+
 
 
     }
@@ -73,6 +80,10 @@ class CatalogFragment : Fragment() {
 
 
 
+
+
+
+
         binding.productList.adapter = adapter
         binding.productList.layoutManager = GridLayoutManager(context, 2)
 
@@ -81,12 +92,17 @@ class CatalogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelFactory = CatalogViewModelFactory(token!!, userId!!)
+
+
+        viewModelFactory = CatalogViewModelFactory( token!!, userId!!)
         viewModel = ViewModelProvider(this, viewModelFactory ).get(CatalogViewModel::class.java)
         //viewModel.token = token
         //viewModel.userId = userId
         viewModel.getProducts()
         viewModel.getAllProductCategories()
+        
+
+
 
 
         viewModel.products.observe(viewLifecycleOwner, Observer{productList ->
@@ -156,3 +172,5 @@ class CatalogFragment : Fragment() {
         _binding = null
     }
 }
+
+
