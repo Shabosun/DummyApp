@@ -30,11 +30,6 @@ class SplashFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         dataStoreManager = DataStoreManager(requireContext())
-
-
-
-
-
     }
 
     override fun onCreateView(

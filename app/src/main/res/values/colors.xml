@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="error_color">#DF1304</color>
     <color name="setting_element_pressed_color">#F3F8FF</color>
+    <color name="star_color">#F9A249</color>
 </resources>

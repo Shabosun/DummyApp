@@ -1,6 +1,7 @@
 package com.example.dummyapp.ui.catalog
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
-
+@AndroidEntryPoint
 class CatalogFragment : Fragment() {
 
     var token : String? = null
@@ -93,8 +94,9 @@ class CatalogFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        Log.d("mylog_cat", "$token : $userId")
         viewModelFactory = CatalogViewModelFactory( token!!, userId!!)
+
         viewModel = ViewModelProvider(this, viewModelFactory ).get(CatalogViewModel::class.java)
         //viewModel.token = token
         //viewModel.userId = userId

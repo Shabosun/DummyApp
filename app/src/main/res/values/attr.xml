@@ -3,6 +3,7 @@
     <declare-styleable name="SettingsElementView">
         <attr name="title_text" format="string"/>
         <attr name="main_text" format="string"/>
+        <attr name="start_icon" format="string"/>
     </declare-styleable>
 
 </resources>

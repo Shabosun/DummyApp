@@ -81,6 +81,7 @@ class CatalogViewModel (val token : String,val userId : Int) : ViewModel() {
                 else
                 {
                     val errorBody : ResponseBody? = response?.errorBody()
+
                     message = response?.errorBody()?.string()?.let {
                         JSONObject(it).getString("message")
                     }.toString()

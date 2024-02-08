@@ -29,6 +29,13 @@ class DataStoreManager(private val context: Context) {
             return preferences[dataStoreKey]
     }
 
+    suspend fun clear()
+    {
+        context.dataStore.edit {
+            it.clear()
+        }
+    }
+
 
 //    suspend fun saveToken(token : String)
 //    {

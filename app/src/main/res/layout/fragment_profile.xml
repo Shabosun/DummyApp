@@ -76,6 +76,17 @@
         app:main_text=""
         app:title_text="@string/sex_profile" />
 
+    <com.example.dummyapp.view.SettingsElementView
+        android:id="@+id/favourites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sex"
+        app:main_text=""
+        app:title_text="@string/fav_profiles" />
+
     <Button
         android:id="@+id/log_out_button"
         android:layout_width="0dp"

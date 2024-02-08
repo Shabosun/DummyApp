@@ -1,5 +1,6 @@
 package com.example.dummyapp.ui.profile
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,14 +11,20 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import com.example.dummyapp.LoginActivity
 import com.example.dummyapp.R
 import com.example.dummyapp.databinding.FragmentProfileBinding
+import com.example.dummyapp.datastore.DataStoreManager
 import com.example.dummyapp.ui.catalog.CatalogViewModel
 import com.example.dummyapp.ui.catalog.CatalogViewModelFactory
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.Adapter
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment() {
@@ -28,6 +35,8 @@ class ProfileFragment : Fragment() {
     var token : String? = null
     var userId : Int? = null
 
+    private lateinit var dataStoreManager: DataStoreManager
+
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var viewModelFactory : ProfileViewModelFactory
 
@@ -37,6 +46,8 @@ class ProfileFragment : Fragment() {
         val args = requireActivity().intent.extras
         token = args?.getString(LoginActivity.TOKEN)
         userId = args?.getInt(LoginActivity.USER_ID)
+
+        dataStoreManager = DataStoreManager(requireContext())
 
 
 
@@ -58,6 +69,16 @@ class ProfileFragment : Fragment() {
         val view = binding.root
 
         binding.logOutButton.setOnClickListener{
+
+            //Сделать здесь появление AlertDialog типа вы уверены или нет?
+
+            lifecycleScope.launch {
+                dataStoreManager.clear()
+            }
+
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
 
         }
 

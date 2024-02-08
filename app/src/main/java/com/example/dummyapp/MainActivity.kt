@@ -37,24 +37,6 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         findViewById<BottomNavigationView>(R.id.bottom_nav).setupWithNavController(navController)
 
-
-//        val messaging = FirebaseMessaging.getInstance()
-//        messaging.token.addOnCompleteListener{task ->
-//            if(!task.isSuccessful)
-//            {
-//                Log.w(LOG_TAG, "Fetching FCM registration token failed", task.exception)
-//                return@addOnCompleteListener
-//            }
-//            val token  = task.result
-//            if(token != null)
-//            {
-//                Log.d(LOG_TAG, "Token: $token")
-//            }
-//            else
-//            {
-//                Log.d(LOG_TAG, "No registration token")
-//            }
-//        }
     }
 
     suspend fun connect(){

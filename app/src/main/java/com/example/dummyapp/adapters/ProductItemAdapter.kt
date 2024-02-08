@@ -1,7 +1,12 @@
 package com.example.dummyapp.adapters
 
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +32,15 @@ class ProductItemAdapter(val clickListener : (productId : Int) -> Unit, val addC
             {
 
                 binding.headline.text = product.title
-                binding.price.text = product.price.toString() + "$"
+                binding.price.text = product.price.toString() + " $"
+                binding.description.text = product.description
+
+                binding.oldPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                binding.oldPrice.text = Math.round(product.price.toInt() * product.discountPercentage).toString()+ " $"
+
+                binding.discount.text = "-" + product.discountPercentage + "%"
+                binding.rating.text = product.rating.toString()
+
                 Picasso.get().load(product.thumbnail).into(binding.tnumbImg)
                 binding.root.setOnClickListener{clickListener(product.id)}
                 binding.buttonAddCart.setOnClickListener{addCartListener(product.id)}

@@ -3,18 +3,21 @@ package com.example.dummyapp.ui.auth
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.example.dummyapp.LoginActivity
 import com.example.dummyapp.MainActivity
 import com.example.dummyapp.R
 import com.example.dummyapp.databinding.FragmentAuthBinding
 import com.example.dummyapp.datastore.DataStoreManager
 import com.example.dummyapp.retrofit.model.AuthRequest
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
 class AuthFragment : Fragment() {
 
@@ -73,9 +76,20 @@ class AuthFragment : Fragment() {
             {
                 lifecycleScope.launch {
                     dataStoreManager.save("token", viewModel.token.value!!) //если isAuth не null, то и token не может быть null
+                    Log.d("mylog_is_auth", "${id}")
+                    dataStoreManager.save("id", viewModel.id.value!!.toString())
+
+                    Log.d("auth log", viewModel.id.value.toString())
+                    Log.d("auth log", viewModel.token.value.toString())
+
 
                 }
-                startActivity(Intent(requireContext(), MainActivity::class.java))
+
+                val intent = Intent(requireContext(), MainActivity::class.java)
+                intent.putExtra(LoginActivity.TOKEN, viewModel.token.value)
+                intent.putExtra(LoginActivity.USER_ID, viewModel.id.value)
+                startActivity(intent)
+
 
             }
 

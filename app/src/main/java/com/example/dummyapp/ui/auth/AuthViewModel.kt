@@ -50,6 +50,10 @@ class AuthViewModel : ViewModel(){
                             token.postValue(user.token)
                             id.postValue(user.id)
                             _isAuth.postValue(true)
+//                            token.value = user.token
+//                            id.value = user.id
+//                            _isAuth.value = true
+
                     }
                 }else
                 {

@@ -22,5 +22,6 @@
     <string name="email_profile">Email</string>
     <string name="birthday_profile">Birthday</string>
     <string name="sex_profile">Sex</string>
+    <string name="fav_profiles">Favourites</string>
     <string name="log_out">Log out</string>
 </resources>

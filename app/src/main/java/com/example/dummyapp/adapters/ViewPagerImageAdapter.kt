@@ -62,31 +62,4 @@ class ViewPagerImageAdapter(val context : Context, private val imageList : List<
         container.removeView(`object` as RelativeLayout)
     }
 
-//    inner class PagerViewHolder(view : View) : RecyclerView.ViewHolder(view)
-//    {
-//        private val binding = FragmentProductInfoBinding.bind(view)
-//
-//        fun bind(position : Int){
-//            //Picasso.get().load(images.get(position)).into(binding.imageView)
-//
-//        }
-//    }
-//
-//
-//    override fun onCreateViewHolder(
-//        parent: ViewGroup,
-//        viewType: Int
-//    ): ViewPagerImageAdapter.PagerViewHolder {
-//        val view = LayoutInflater.from(parent.context)
-//            .inflate(R.layout.fragment_product_info, parent, false)
-//    return PagerViewHolder(view)
-//    }
-//
-//    override fun onBindViewHolder(holder: ViewPagerImageAdapter.PagerViewHolder, position: Int) {
-//        holder.bind(position)
-//    }
-//
-//    override fun getItemCount(): Int {
-//        return images.count()
-//    }
 }
