@@ -59,9 +59,7 @@ class CartFragment : Fragment() {
         binding.rcv.adapter = adapter
         binding.rcv.layoutManager = LinearLayoutManager(context)
 
-        binding.button.setOnClickListener{
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
-        }
+
 
 
 

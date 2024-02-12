@@ -1,6 +1,9 @@
 package com.example.dummyapp.retrofit.model
 
-data class Product(
+import com.example.dummyapp.room.ProductClassAdapter
+import com.example.dummyapp.room.ProductDB
+
+data class Product (
     val id : Int,
     val title : String,
     val description : String,
@@ -13,4 +16,7 @@ data class Product(
     val thumbnail : String,
     val images : List<String>
 
-)
+){
+
+
+}

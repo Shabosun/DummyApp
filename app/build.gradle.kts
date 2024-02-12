@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-kapt")
+    id("kotlin-android")
+    //id("com.google.devtools.ksp")
 
 }
 
@@ -38,7 +40,7 @@ android {
     }
     buildFeatures{
         viewBinding = true
-        dataBinding = true
+        //dataBinding = true
     }
 }
 
@@ -48,7 +50,13 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     val nav_version = "2.7.4"
-    val room_version = "2.5.2"
+    val room_version = "2.6.1"
+
+    //RxJava
+    implementation("io.reactivex.rxjava3:rxjava:3.1.8")
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
+
+
 
     //Other
     implementation("androidx.preference:preference-ktx:1.2.1")
@@ -68,7 +76,10 @@ dependencies {
     //Room
     implementation ("androidx.room:room-runtime:$room_version")
     implementation ("androidx.room:room-ktx:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation ("androidx.room:room-testing:$room_version")
+    implementation("androidx.room:room-rxjava3:$room_version")
+    //ksp("androidx.room:room-compiler:2.5.0")
+    //annotationProcessor("androidx.room:room-compiler:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

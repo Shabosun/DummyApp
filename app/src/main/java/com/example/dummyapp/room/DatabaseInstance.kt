@@ -6,14 +6,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [UserDB::class], version = 1, exportSchema = false)
+@Database(entities = [ProductDB::class], version = 3, exportSchema = false)
 abstract class DatabaseInstance :  RoomDatabase() {
 
-    abstract val userDao : UserDao
+    //abstract val userDao : UserDao
+    abstract val productDao: ProductDao
 
 
     companion object{
-        @Volatile
+        //@Volatile
         private var INSTANCE : DatabaseInstance? = null
         fun getInstance(context : Context) : DatabaseInstance{
 
@@ -25,6 +26,7 @@ abstract class DatabaseInstance :  RoomDatabase() {
                         DatabaseInstance::class.java,
                         "dummy_database")
                         .build()
+
                     INSTANCE = instance
 
                 }

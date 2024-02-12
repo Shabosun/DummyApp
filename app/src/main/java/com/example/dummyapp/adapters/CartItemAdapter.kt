@@ -1,5 +1,6 @@
 package com.example.dummyapp.adapters
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,24 @@ class CartItemAdapter : ListAdapter<Product, CartItemAdapter.ViewHolder>(Compora
         fun bind(product: Product)
         {
             binding.titleProductName.text = product.title
+            binding.price.text = product.price.toString()+ " $"
+
+            binding.oldPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            binding.oldPrice.text = Math.round(product.price.toInt() * product.discountPercentage).toString()+ " $"
+
             Picasso.get().load(product.thumbnail).into(binding.thumbImg)
+
+            var cnt = 0;
+
+            binding.buttonDecrease.setOnClickListener{
+                cnt--
+                binding.count.text = cnt.toString()
+            }
+
+            binding.buttonIncrease.setOnClickListener{
+                cnt++
+                binding.count.text = cnt.toString()
+            }
 
         }
 

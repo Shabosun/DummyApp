@@ -82,6 +82,10 @@ class ProfileFragment : Fragment() {
 
         }
 
+        binding.favourites.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_favouritesFragment)
+        }
+
 
 
 
@@ -114,6 +118,8 @@ class ProfileFragment : Fragment() {
         profileViewModel.image.observe(viewLifecycleOwner, Observer{ _image ->
             Picasso.get().load(_image).into(binding.profileImage)
         })
+
+
 
 
 

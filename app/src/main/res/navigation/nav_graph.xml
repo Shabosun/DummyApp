@@ -23,7 +23,11 @@
         android:id="@+id/profileFragment"
         android:name="com.example.dummyapp.ui.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_favouritesFragment"
+            app:destination="@id/favouritesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/productInfoFragment"
         android:name="com.example.dummyapp.ui.ProductInfoFragment.ProductInfoFragment"
@@ -32,5 +36,17 @@
         <argument
             android:name="productId"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="com.example.dummyapp.ui.favourites.FavouritesFragment"
+        android:label="fragment_favourites"
+        tools:layout="@layout/fragment_favourites" >
+        <action
+            android:id="@+id/action_favouritesFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_favouritesFragment_to_productInfoFragment"
+            app:destination="@id/productInfoFragment" />
     </fragment>
 </navigation>

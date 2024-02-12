@@ -94,7 +94,7 @@ class CatalogFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("mylog_cat", "$token : $userId")
+        //Log.d("mylog_cat", "$token : $userId")
         viewModelFactory = CatalogViewModelFactory( token!!, userId!!)
 
         viewModel = ViewModelProvider(this, viewModelFactory ).get(CatalogViewModel::class.java)

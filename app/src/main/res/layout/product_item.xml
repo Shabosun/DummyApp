@@ -30,10 +30,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="4dp"
             android:text="123"
             android:textSize="11sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_favourite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tnumb_img" />
 
@@ -113,10 +113,11 @@
             android:id="@+id/button_add_favourite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:button="@drawable/sl_favourite_24dp"
             app:buttonTint="@color/error_color"
-            app:layout_constraintEnd_toEndOf="@+id/tnumb_img"
-            app:layout_constraintTop_toTopOf="@+id/tnumb_img" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tnumb_img" />
 
         <ImageButton
             android:id="@+id/button_add_cart"
