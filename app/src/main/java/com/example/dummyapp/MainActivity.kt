@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         connectivityObserver.observe().collect {
             CONNECTION = it.toString()
-            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
             Log.d("inet", it.toString())
         }
     }

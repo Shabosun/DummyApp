@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -13,10 +14,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.transition.Visibility
 import com.example.dummyapp.LoginActivity
 import com.example.dummyapp.adapters.ProductItemAdapter
 import com.example.dummyapp.databinding.FragmentCatalogBinding
+import com.example.dummyapp.room.DatabaseInstance
+import com.example.dummyapp.room.ProductDao
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,13 +39,17 @@ class CatalogFragment : Fragment() {
     private lateinit var viewModel : CatalogViewModel
     lateinit var viewModelFactory: CatalogViewModelFactory
 
+    private lateinit var dao: ProductDao
+
 
 
 
 
 
     init{
-        adapter = ProductItemAdapter( { productId -> viewModel.onProductClicked(productId) }, {productId -> viewModel.addProductToCart(productId)  })
+        adapter = ProductItemAdapter( { productId -> viewModel.onProductClicked(productId) },
+            {productId -> viewModel.addProductToCart(productId)  },
+            {product -> viewModel.addProductToFavourites(product)})
 
     }
 
@@ -62,7 +71,10 @@ class CatalogFragment : Fragment() {
     ): View? {
         _binding = FragmentCatalogBinding.inflate(inflater, container, false)
 
+
         val view = binding.root
+
+
 
 
         binding.searchView.setOnQueryTextListener(object : OnQueryTextListener{
@@ -94,12 +106,13 @@ class CatalogFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Log.d("mylog_cat", "$token : $userId")
-        viewModelFactory = CatalogViewModelFactory( token!!, userId!!)
+
+        val application = requireNotNull(this.activity).application
+        dao = DatabaseInstance.getInstance(application).productDao
+
+        viewModelFactory = CatalogViewModelFactory( token!!, userId!!, dao)
 
         viewModel = ViewModelProvider(this, viewModelFactory ).get(CatalogViewModel::class.java)
-        //viewModel.token = token
-        //viewModel.userId = userId
         viewModel.getProducts()
         viewModel.getAllProductCategories()
         
@@ -129,6 +142,12 @@ class CatalogFragment : Fragment() {
 
         })
 
+        viewModel.info_message.observe(viewLifecycleOwner, Observer{info ->
+            if(info != null){
+                Snackbar.make(view, info, Snackbar.LENGTH_SHORT).show()
+            }
+        })
+
 
         viewModel.categories.observe(viewLifecycleOwner, Observer{
             categories ->
@@ -146,10 +165,7 @@ class CatalogFragment : Fragment() {
                 }
                 chip.setOnClickListener{x -> x.setOnClickListener{
 
-
                         viewModel.getProductsOfCategory(chip.text.toString())
-
-
 
                 }}
                 binding.chipGroup.addView(chip)
@@ -163,7 +179,6 @@ class CatalogFragment : Fragment() {
 
 
 
-
     }
 
 
@@ -173,6 +188,10 @@ class CatalogFragment : Fragment() {
 
         _binding = null
     }
+
+
+
+
 }
 
 

@@ -1,5 +1,6 @@
 package com.example.dummyapp.ui.profile
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -69,17 +71,7 @@ class ProfileFragment : Fragment() {
         val view = binding.root
 
         binding.logOutButton.setOnClickListener{
-
-            //Сделать здесь появление AlertDialog типа вы уверены или нет?
-
-            lifecycleScope.launch {
-                dataStoreManager.clear()
-            }
-
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-
+            showLogOutDialog(requireContext())
         }
 
         binding.favourites.setOnClickListener {
@@ -133,6 +125,35 @@ class ProfileFragment : Fragment() {
         super.onDestroyView()
 
         _binding = null
+    }
+
+    fun showLogOutDialog(context : Context){
+
+        val builder : AlertDialog.Builder = AlertDialog.Builder(context)
+        val message = resources.getString(R.string.exit_dialog_message)
+        builder
+            .setMessage(message)
+            .setPositiveButton("Yes") { dialog, which ->
+                logOut()
+
+            }
+                .setNegativeButton("No"){dialog, which ->
+
+            }
+
+        val dialog : AlertDialog = builder.create()
+        dialog.show()
+
+    }
+
+    fun logOut(){
+        lifecycleScope.launch {
+            dataStoreManager.clear()
+        }
+
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 
 }

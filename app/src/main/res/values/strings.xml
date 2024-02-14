@@ -24,4 +24,7 @@
     <string name="sex_profile">Sex</string>
     <string name="fav_profiles">Favourites</string>
     <string name="log_out">Log out</string>
+    <!--Profile Fragment-->
+    <string name="exit_dialog_message">Are you sure you want to exit?</string>
+    <!--Profile Fragment-->
 </resources>

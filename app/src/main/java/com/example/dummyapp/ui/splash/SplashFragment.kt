@@ -12,12 +12,19 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.example.dummyapp.LoginActivity
 import com.example.dummyapp.MainActivity
 import com.example.dummyapp.R
 import com.example.dummyapp.databinding.FragmentSplashBinding
 import com.example.dummyapp.datastore.DataStoreManager
+import com.example.dummyapp.services.TokenUpdateWorker
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 
 class SplashFragment : Fragment() {
@@ -46,6 +53,7 @@ class SplashFragment : Fragment() {
 
         binding.imageView.alpha = 0f
         binding.imageView.animate().setDuration(2000).alpha(1f).withEndAction{
+            tokenUpdaterWorkManager()
 
             lifecycleScope.launch {
 
@@ -55,7 +63,7 @@ class SplashFragment : Fragment() {
                 {
                     Log.d("mylog", "token : $token, id : $id")
                     findNavController().navigate(R.id.action_splashFragment_to_authFragment)
-                    Toast.makeText(context, "null", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "null", Toast.LENGTH_SHORT).show()
                 }
                 else{
                     val intent = Intent(requireContext(), MainActivity::class.java)
@@ -64,11 +72,33 @@ class SplashFragment : Fragment() {
                     startActivity(intent)
                     activity?.finish()
                     //findNavController().navigate(R.id.action_authFragment_to_mainActivity)
-                    Toast.makeText(context, "not null", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "not null", Toast.LENGTH_SHORT).show()
                 }
 
 
             }
         }
+    }
+
+
+    fun tokenUpdaterWorkManager(){
+
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val workRequest = PeriodicWorkRequest.Builder(
+            TokenUpdateWorker::class.java,
+            15,
+            TimeUnit.MINUTES
+
+        ).setConstraints(constraints)
+            .addTag("tokenUpdater")
+            .build()
+
+        WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
+            "tokenUpdater",
+            ExistingPeriodicWorkPolicy.KEEP,
+            workRequest)
     }
 }

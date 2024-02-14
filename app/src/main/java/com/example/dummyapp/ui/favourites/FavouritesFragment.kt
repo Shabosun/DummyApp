@@ -43,7 +43,7 @@ class FavouritesFragment : Fragment() {
     init{
         adapter = ProductItemAdapter( { productId -> viewModel.onProductClicked(productId) },
             //{productId -> viewModel.addProductToCart(productId)  }
-            {}
+            {},{}
         )
     }
 
@@ -117,4 +117,6 @@ class FavouritesFragment : Fragment() {
 
         disposable.clear()
     }
+
+
 }

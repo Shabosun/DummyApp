@@ -15,7 +15,7 @@ interface ProductDao {
     //@Insert
     //suspend fun insert(product : ProductDB)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertProduct(product : ProductDB) : Completable
+    fun insertProduct(product : ProductDB)
 
     @Query("SELECT * FROM products_table")
     fun getAllProducts() : Flowable<List<ProductDB>>

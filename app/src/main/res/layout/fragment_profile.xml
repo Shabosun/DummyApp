@@ -42,6 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:start_icon="@drawable/phone_icon"
         app:main_text=""
         app:title_text="@string/phone_profile"/>
 
@@ -52,6 +53,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phone"
+        app:start_icon="@drawable/email_icon"
         app:main_text=""
         app:title_text="@string/email_profile"
         />
@@ -63,6 +65,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email"
+        app:start_icon="@drawable/birthday_icon"
         app:main_text="20.12.2020"
         app:title_text="@string/birthday_profile" />
 
@@ -73,6 +76,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/birthday"
+        app:start_icon="@drawable/gender_icon"
         app:main_text=""
         app:title_text="@string/sex_profile" />
 
@@ -84,6 +88,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sex"
+        app:start_icon="@drawable/heart_icon"
         app:main_text=""
         app:title_text="@string/fav_profiles" />
 

@@ -1,38 +1,31 @@
 package com.example.dummyapp.ui.catalog
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dummyapp.LoginActivity
 import com.example.dummyapp.retrofit.ProductApi
 import com.example.dummyapp.retrofit.RetrofitInstance
-import com.example.dummyapp.retrofit.model.Cart
 import com.example.dummyapp.retrofit.model.CartPost
 import com.example.dummyapp.retrofit.model.Product
-import com.example.dummyapp.retrofit.model.Products
 import com.example.dummyapp.retrofit.model.ProductsPost
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
+import com.example.dummyapp.room.ProductDB
+import com.example.dummyapp.room.ProductDao
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import java.io.IOException
-import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
-import kotlin.random.Random
 
 
-class CatalogViewModel (val token : String,val userId : Int) : ViewModel() {
+class CatalogViewModel (val token : String,val userId : Int, val dao : ProductDao) : ViewModel() {
 
 
     private  val LOG_TAG = "CatalogViewModel"
+
 
 
 
@@ -51,6 +44,13 @@ class CatalogViewModel (val token : String,val userId : Int) : ViewModel() {
     val navigateToProduct : LiveData<Int?>
         get() = _navigateToProduct
 
+    private val _info_message = MutableLiveData<String?>()
+    val info_message : LiveData<String?>
+        get() = _info_message
+
+
+
+
     private val _error = MutableLiveData<String?>()
     val error : LiveData<String?>
         get() = _error
@@ -60,8 +60,42 @@ class CatalogViewModel (val token : String,val userId : Int) : ViewModel() {
         _error.value = null
     }
 
+    fun addProductToFavourites(product : Product) {
+
+        val disposable = Completable.fromAction{
+            //val product = products.value?.get(productId)
+            if (product != null) {
+                dao.insertProduct(
+                    ProductDB(
+                        product.id,
+                        product.title,
+                        product.description,
+                        product.price,
+                        product.discountPercentage,
+                        product.rating,
+                        product.stock,
+                        product.brand,
+                        product.category,
+                        product.thumbnail
+                    )
+                )
+            }
+
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(/* onComplete = */ {
+                        _info_message.postValue("Added to favorites")
+                       Log.e(LOG_TAG, "addProductToFavorites: onComplete")
+
+            },/* onError = */ {
+                Log.e(LOG_TAG,  it.message.toString())
+
+            })
 
 
+
+
+    }
 
     fun getProducts()
     {

@@ -39,6 +39,7 @@ tools:context=".ui.ProductInfoFragment.ProductInfoFragment">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:isIndicator="true"
         app:layout_constraintEnd_toEndOf="@+id/rating_label"
         app:layout_constraintStart_toStartOf="@+id/rating_label"
         app:layout_constraintTop_toBottomOf="@+id/rating_label" />

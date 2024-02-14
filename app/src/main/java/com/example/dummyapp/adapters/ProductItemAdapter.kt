@@ -7,9 +7,11 @@ import android.graphics.drawable.Drawable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -19,7 +21,12 @@ import com.example.dummyapp.databinding.ProductItemBinding
 import com.example.dummyapp.retrofit.model.Product
 import com.squareup.picasso.Picasso
 
-class ProductItemAdapter(val clickListener : (productId : Int) -> Unit, val addCartListener : (productId : Int) -> Unit)
+class ProductItemAdapter(val clickListener : (productId : Int) -> Unit, //для просмотра детальной информации
+                         val addCartListener : (productId : Int) -> Unit, //для добавления в корзину
+                         val addFavoritesListener : (product : Product) -> Unit)
+
+
+
     : ListAdapter<Product, ProductItemAdapter.ViewHolder>(Comporator()) {
 
 
@@ -28,7 +35,10 @@ class ProductItemAdapter(val clickListener : (productId : Int) -> Unit, val addC
         {
             private val binding = ProductItemBinding.bind(view)
 
-            fun bind(product : Product, clickListener : (productId : Int) -> Unit, addCartListener : (productId : Int) -> Unit)
+            fun bind(product : Product,
+                     clickListener : (productId : Int) -> Unit,
+                     addCartListener : (productId : Int) -> Unit,
+                     addFavoritesListener : (product : Product) -> Unit)
             {
 
                 binding.headline.text = product.title
@@ -41,9 +51,26 @@ class ProductItemAdapter(val clickListener : (productId : Int) -> Unit, val addC
                 binding.discount.text = "-" + product.discountPercentage + "%"
                 binding.rating.text = product.rating.toString()
 
+
                 Picasso.get().load(product.thumbnail).into(binding.tnumbImg)
                 binding.root.setOnClickListener{clickListener(product.id)}
                 binding.buttonAddCart.setOnClickListener{addCartListener(product.id)}
+                binding.buttonAddFavourite.setOnClickListener{
+                    addFavoritesListener(product)
+                    Log.d("mylog","add to fav")
+                }
+
+//                binding.buttonAddFavourite.setOnCheckedChangeListener { buttonView, checked ->
+//                    if(checked){
+//
+//                        addFavoritesListener(product.id)
+//                        Log.d("mylog", "checked")
+//                    }else{
+//                        Log.d("mylog", "not checked")
+//
+//                    }
+//
+//                }
             }
 
 
@@ -57,7 +84,7 @@ class ProductItemAdapter(val clickListener : (productId : Int) -> Unit, val addC
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), clickListener, addCartListener)
+        holder.bind(getItem(position), clickListener, addCartListener, addFavoritesListener)
     }
 
     class Comporator : DiffUtil.ItemCallback<Product>(){
@@ -70,5 +97,6 @@ class ProductItemAdapter(val clickListener : (productId : Int) -> Unit, val addC
             return oldItem == newItem
         }
     }
+
 
 }
