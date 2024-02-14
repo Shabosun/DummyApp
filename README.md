@@ -1,5 +1,5 @@
 # DummyApp
-Мобильное приложение аналог интернет-магазина. Использовались данные тестового API DummyJson. Для получения данных использовался Retrofit. Сам проект разрабатывался с использованием шаблона проектирования MVVM.
+Мобильное приложение аналог интернет-магазина. Использовались данные тестового API DummyJson. Технологии, которые использовал в этом проекте: Retrofit, OkHttp, Picasso, Coroutines, Room, RxJava, WorkManager, MVVM.
 
 ![LoginActivity](https://github.com/Shabosun/DummyApp/assets/61621493/9570d0d6-2380-4219-9986-b7918ef67f62)
 ![image](https://github.com/Shabosun/DummyApp/assets/61621493/6f3edf05-75af-4292-b4e7-b6c61b7f035f)
