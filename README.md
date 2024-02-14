@@ -5,4 +5,5 @@
 ![image](https://github.com/Shabosun/DummyApp/assets/61621493/6f3edf05-75af-4292-b4e7-b6c61b7f035f)
 ![image](https://github.com/Shabosun/DummyApp/assets/61621493/70c469e5-7bbc-4241-839b-ea4d0d2307c9)
 ![CatalogElement](https://github.com/Shabosun/DummyApp/assets/61621493/ca500249-e31b-42c7-a654-27874d921986)
-![Profile](https://github.com/Shabosun/DummyApp/assets/61621493/095bfa37-f3e4-4811-ab6d-9544b990ed3f)
+![image](https://github.com/Shabosun/DummyApp/assets/61621493/cb55f4a6-8720-4e80-8e96-1970bf309b8c)
+
